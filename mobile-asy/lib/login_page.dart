@@ -42,8 +42,10 @@ class _LoginPageState extends State<LoginPage> {
 
       await prefs.setString('nis', user['nis'] ?? "");
       await prefs.setString('nama', user['name'] ?? "");
-      await prefs.getString("kelas") ?? "-";
-      await prefs.getString("email") ?? "-";
+      await prefs.setString("kelas", user['kelas'] ?? "-");
+      await prefs.setString("email", user['email'] ?? "-");
+      await prefs.setString("foto_${user['nis']}", "");
+
       if (!mounted) return;
       Navigator.pushReplacementNamed(context, '/home');
     } else {
