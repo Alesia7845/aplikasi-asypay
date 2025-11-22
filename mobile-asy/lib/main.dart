@@ -5,7 +5,6 @@ import 'tagihan_aktif.dart';
 import 'total_tunggakan.dart';
 import 'riwayat_tagihan.dart';
 import 'profile.dart';
-import 'services/auth_service.dart';
 
 void main() {
   runApp(const MyApp());

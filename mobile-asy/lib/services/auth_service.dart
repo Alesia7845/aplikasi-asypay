@@ -22,6 +22,10 @@ class AuthService {
         // Simpan token di local storage
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('token', data['token']);
+        await prefs.setString('nis', data['user']['nis']);
+        await prefs.setString('nama', data['user']['name']);
+        await prefs.setString('kelas', data['user']['kelas']);
+        await prefs.setString('email', data['user']['email']);
 
         return {
           'success': true,

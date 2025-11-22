@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart'; // Pastikan path ini benar ya
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -35,15 +36,18 @@ class _LoginPageState extends State<LoginPage> {
     setState(() => _loading = false);
 
     if (result['success']) {
-      // Jika berhasil login
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(result['message'] ?? 'Login berhasil')),
-      );
+      final prefs = await SharedPreferences.getInstance();
 
-      // Arahkan ke halaman home
+      final user = result['user']; // dari API login
+
+      await prefs.setString('nis', user['nis'] ?? "");
+      await prefs.setString('nama', user['name'] ?? "");
+      await prefs.getString("kelas") ?? "-";
+      await prefs.getString("email") ?? "-";
       if (!mounted) return;
       Navigator.pushReplacementNamed(context, '/home');
     } else {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(result['message'] ?? 'Login gagal')),
       );
