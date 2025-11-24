@@ -26,6 +26,7 @@ class AuthService {
         await prefs.setString('nama', data['user']['name']);
         await prefs.setString('kelas', data['user']['kelas']);
         await prefs.setString('email', data['user']['email']);
+        await prefs.setString('tahun_ajaran', data['user']['tahun_ajaran']);
 
         return {
           'success': true,
