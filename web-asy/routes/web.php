@@ -12,22 +12,21 @@ use App\Http\Controllers\Admin\LaporanController;
 use App\Http\Controllers\Siswa\AuthController as SiswaAuthController;
 use App\Http\Controllers\Siswa\DashboardController as SiswaDashboardController;
 use App\Http\Controllers\Siswa\SiswaPembayaranController;
-use App\Http\Controllers\Siswa\ProfileController as SiswaProfileController;
+// use App\Http\Controllers\Siswa\ProfileController as SiswaProfileController; // <-- SUDAH TIDAK DIPAKAI
 use App\Http\Controllers\Siswa\SiswaRiwayatController;
 use App\Http\Controllers\Siswa\PaymentController;
-use App\Http\Controllers\MidtransController;
-use App\Http\Controllers\Auth\LoginController;
 
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\MidtransController;
 use App\Http\Controllers\ChartController;
+
+// === Profil umum (bukan admin/siswa) ===
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Di file ini kita mendefinisikan URL‐URL aplikasi, termasuk rute untuk
-| admin dan siswa, serta route Midtrans dan lainnya.
-|
 */
 
 // Halaman Awal
@@ -36,6 +35,7 @@ Route::get('/', function () {
 });
 
 // ================== AUTH ROUTES ==================
+
 // Login Admin
 Route::get('/admin/login', [AuthController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [AuthController::class, 'login'])->name('admin.login.submit');
@@ -49,7 +49,7 @@ Route::post('/siswa/logout', [SiswaAuthController::class, 'logout'])->name('sisw
 Route::get('/siswa/register', [SiswaAuthController::class, 'showRegisterForm'])->name('siswa.register');
 Route::post('/siswa/register', [SiswaAuthController::class, 'register'])->name('siswa.register.submit');
 
-// Laravel default auth (email verification, password reset, dsb.)
+// Laravel default auth
 require __DIR__ . '/auth.php';
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
@@ -96,20 +96,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // Kasir (Admin)
         Route::prefix('kasir')->name('kasir.')->group(function () {
             Route::get('/', [KasirController::class, 'index'])->name('index');
-             Route::get('/{pivotId}/bayar', [KasirController::class, 'bayarForm'])->name('bayarForm');
+            Route::get('/{pivotId}/bayar', [KasirController::class, 'bayarForm'])->name('bayarForm');
             Route::post('/{pivotId}/proses', [KasirController::class, 'prosesBayar'])->name('proses');
-            Route::post('/payment-tunai/{pivotId}', [KasirController::class, 'prosesPaymentTunai'])->name('paymentTunai');        
+            Route::post('/payment-tunai/{pivotId}', [KasirController::class, 'prosesPaymentTunai'])->name('paymentTunai');
         });
 
         // Laporan (Admin)
-    Route::prefix('laporan')->name('laporan.')->group(function () {
-    Route::get('/', [LaporanController::class, 'index'])->name('index');
-    Route::get('/export/excel', [LaporanController::class, 'exportExcel'])->name('export.excel');
-    Route::get('/export/pdf', [LaporanController::class, 'exportPDF'])->name('export.pdf');
-});
-
-
-     
+        Route::prefix('laporan')->name('laporan.')->group(function () {
+            Route::get('/', [LaporanController::class, 'index'])->name('index');
+            Route::get('/export/excel', [LaporanController::class, 'exportExcel'])->name('export.excel');
+            Route::get('/export/pdf', [LaporanController::class, 'exportPDF'])->name('export.pdf');
+        });
     });
 
     // ================== SISWA ROUTES ==================
@@ -122,48 +119,49 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/dashboard', [SiswaDashboardController::class, 'index'])->name('dashboard');
 
         // Daftar Tagihan Pembayaran (Siswa)
-        Route::get('/pembayaran', [SiswaPembayaranController::class, 'index'])
-             ->name('pembayaran.index');
+        Route::get('/pembayaran', [SiswaPembayaranController::class, 'index'])->name('pembayaran.index');
 
         // Detail Tagihan Pembayaran
-        Route::get('/pembayaran/{id}', [SiswaPembayaranController::class, 'show'])
-             ->name('pembayaran.show');
+        Route::get('/pembayaran/{id}', [SiswaPembayaranController::class, 'show'])->name('pembayaran.show');
 
-        // **Konfirmasi Pembayaran Tunai** (menyamai route name di Blade)
+        // Konfirmasi Pembayaran Tunai
         Route::post('/pembayaran/{id}/konfirmasi-tunai', [SiswaPembayaranController::class, 'konfirmasiTunai'])
-             ->name('pembayaran.konfirmasiTunai');
+            ->name('pembayaran.konfirmasiTunai');
 
-        // (Pilihan Anda: jika masih butuh route bayar-transfer / prosesMidtrans,
-        //  bisa dibiarkan atau diganti sesuai kebutuhan. Contoh:)
+        // Bayar Transfer
         Route::post('/pembayaran/{id}/bayar-transfer', [SiswaPembayaranController::class, 'bayarTransfer'])
-             ->name('pembayaran.bayarTransfer');
+            ->name('pembayaran.bayarTransfer');
 
+        // Proses Midtrans / lainnya
         Route::post('/pembayaran/{id}/proses', [SiswaPembayaranController::class, 'prosesPembayaran'])
-             ->name('pembayaran.proses');
+            ->name('pembayaran.proses');
 
-             Route::get('/pembayaran/{id}/generate-token', [SiswaPembayaranController::class, 'generateToken'])
-         ->name('pembayaran.generateToken');
-
-       
-         
-        // Jika sebelumnya ada route salah defined seperti:
-        // Route::post('/siswa/pembayaran/tunai/{id}', ...)
-        // silakan dihapus atau diganti karena sudah kita definisikan di atas.
-
-       
-     
-        // Profil (Siswa)
-        Route::resource('/profile', SiswaProfileController::class)->names('profile');
+        Route::get('/pembayaran/{id}/generate-token', [SiswaPembayaranController::class, 'generateToken'])
+            ->name('pembayaran.generateToken');
 
         // Riwayat Pembayaran (Siswa)
         Route::prefix('riwayat')->name('riwayat.')->group(function () {
-    Route::get('/', [SiswaRiwayatController::class, 'index'])->name('index');
-    Route::get('/cetak/{id}', [SiswaRiwayatController::class, 'cetak'])->name('cetak');
-    Route::get('/cetak-pdf/{id}', [SiswaRiwayatController::class, 'cetakPDF'])->name('cetak.pdf');
-});
+            Route::get('/', [SiswaRiwayatController::class, 'index'])->name('index');
+            Route::get('/cetak/{id}', [SiswaRiwayatController::class, 'cetak'])->name('cetak');
+            Route::get('/cetak-pdf/{id}', [SiswaRiwayatController::class, 'cetakPDF'])->name('cetak.pdf');
+        });
+
         // Transfer Manual (opsional)
         Route::view('/pembayaran/transfer', 'pembayaran.transfer')->name('pembayaran.transfer');
     });
+
+    /*
+    |--------------------------------------------------------------------------
+    | ROUTE PROFIL (UMUM) - BUKAN DI PREFIX ADMIN/SISWA
+    |--------------------------------------------------------------------------
+    | Bisa dipakai untuk profil user yang sedang login.
+    | Nanti tinggal taruh di layout:
+    | <a href="{{ route('profile.index') }}">Profil</a>
+    |--------------------------------------------------------------------------
+    */
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 });
 
 // ================== CHART ROUTES ==================
@@ -172,7 +170,6 @@ Route::get('/grafik-pembayaran', function () {
     return view('chart');
 });
 
-
- // === ROUTE KANONIK WEBHOOK MIDTRANS (TANPA PREFIX) ===
+// === ROUTE KANONIK WEBHOOK MIDTRANS (TANPA PREFIX) ===
 Route::post('/midtrans/notification', [SiswaPembayaranController::class, 'notificationHandler'])
     ->name('midtrans.notification');

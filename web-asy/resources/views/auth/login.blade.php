@@ -11,23 +11,14 @@
     <div class="bg-green rounded-2xl shadow-lg flex flex-col md:flex-row overflow-hidden w-[90%] md:w-[850px]">
         <!-- Bagian Kiri -->
         <div class="hidden md:flex md:w-1/2 items-center justify-center p-6 bg-gray-50">
-            <img src="{{ asset('images/islam.jpg') }}" alt="Ilustrasi Login" class="w-4/5 rounded-lg shadow-md">
+            <img src="{{ asset('images/landing.jpg') }}" alt="Ilustrasi Login" class="w-4/5 rounded-lg shadow-md">
         </div>
 
         <!-- Bagian Kanan -->
         <div class="w-full md:w-1/2 p-8 flex flex-col justify-center bg-white">
             <!-- Logo dan Judul -->
-            <div class="text-center mb-6">
-                <div class="flex justify-center mb-2">
-                    <div class="bg-blue-500 p-3 rounded-full shadow">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8v10a2 2 0 01-2 2H5a2 2 0 01-2-2V8z" />
-                        </svg>
-                    </div>
-                </div>
-                <h2 class="text-xl font-semibold text-gray-700">ASYPAY</h2>
+            <div class="brand">
+                <img src="{{ asset('images/logo.jpg') }}" class="brand-logo" alt="Logo">
             </div>
 
             <!-- Pesan Status -->

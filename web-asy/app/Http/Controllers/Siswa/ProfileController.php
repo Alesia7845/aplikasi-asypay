@@ -11,12 +11,12 @@ class ProfileController extends Controller
     public function index()
     {
         $profiles = Profile::all();
-        return view('siswa.profile.index', compact('profiles'));
+        return view('profile.index', compact('profiles'));
     }
 
     public function create()
     {
-        return view('siswa.profile.create');
+        return view('profile.create');
     }
 
     public function store(Request $request)
@@ -35,7 +35,7 @@ class ProfileController extends Controller
     public function edit($id)
     {
         $profile = Profile::findOrFail($id);
-        return view('siswa.profile.edit', compact('profile'));
+        return view('profile.edit', compact('profile'));
     }
 
     public function update(Request $request, $id)

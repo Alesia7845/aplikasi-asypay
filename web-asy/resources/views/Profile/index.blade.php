@@ -1,63 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>Profil Siswa</title>
     <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            padding: 20px;
-            background: #f0f2f5;
-        }
-
-        .card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 500px;
-            margin: auto;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        h2 {
-            text-align: center;
-        }
-
-        .info {
-            margin: 10px 0;
-        }
-
-        .label {
-            font-weight: bold;
-            display: inline-block;
-            width: 100px;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 8px 12px;
-            background-color: #007bff;
-            color: white;
-            border-radius: 5px;
-            text-decoration: none;
-            margin-top: 20px;
-        }
+        body { font-family: Arial; background: #f3f3f3; padding: 20px; }
+        .box { background: white; padding: 20px; border-radius: 10px; max-width: 450px; margin: auto; }
+        .foto { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; }
+        table td { padding: 5px 0; }
+        .btn { background: green; color:white; padding:10px 15px; text-decoration:none; border-radius:5px; display:block; text-align:center; margin-top:20px; }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h2>Profil Siswa</h2>
 
-        @if (session('success'))
-            <p style="color: green;">{{ session('success') }}</p>
-        @endif
+<div class="box">
 
-        <div class="info"><span class="label">Nama:</span> {{ $profile->nama }}</div>
-        <div class="info"><span class="label">Kelas:</span> {{ $profile->kelas }}</div>
-        <div class="info"><span class="label">NIS:</span> {{ $profile->nis }}</div>
-        <div class="info"><span class="label">Alamat:</span> {{ $profile->alamat }}</div>
+    <h2 style="text-align:center; margin-bottom:15px;">Profil Siswa</h2>
 
-        <a href="{{ route('profile.edit', $profile->id) }}" class="btn">Edit Profil</a>
+    <div style="text-align:center;margin-bottom:20px;">
+        <img src="{{ $user->foto ? asset('foto_siswa/'.$user->foto) : asset('default-avatar.png') }}"
+             class="foto">
     </div>
+
+    <table width="100%">
+        <tr><td><b>Nama</b></td><td>: {{ $user->name }}</td></tr>
+        <tr><td><b>NIS</b></td><td>: {{ $user->nis }}</td></tr>
+        <tr><td><b>Kelas</b></td><td>: {{ $user->kelas }}</td></tr>
+        <tr><td><b>Tahun Ajaran</b></td><td>: {{ $user->tahun_ajaran }}</td></tr>
+        <tr><td><b>Email</b></td><td>: {{ $user->email }}</td></tr>
+    </table>
+
+    <!-- Button Actions -->
+    <div class="button-group">
+        @if(auth()->user()->role === 'siswa')
+            <a href="{{ route('siswa.dashboard') }}" class="btn-custom btn-secondary">
+                <i class="fa fa-arrow-left"></i> Kembali
+            </a>
+        @else
+            <a href="{{ route('admin.dashboard') }}" class="btn-custom btn-secondary">
+                <i class="fa fa-arrow-left"></i> Kembali
+            </a>
+        @endif
+    <a href="{{ route('profile.edit') }}" class="btn">Edit Profil</a>
+
+</div>
+
 </body>
 </html>

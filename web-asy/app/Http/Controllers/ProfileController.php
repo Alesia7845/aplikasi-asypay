@@ -8,25 +8,19 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
-    public function edit(Request $request)
+    public function index()
     {
-        $user = $request->user();
-
-        // Ambil opsi kelas dari tabel users (jika ada kolom 'kelas')
-        $kelasOptions = collect();
-        if (Schema::hasColumn('users', 'kelas')) {
-            $kelasOptions = DB::table('users')
-                ->whereNotNull('kelas')
-                ->select('kelas')
-                ->groupBy('kelas')
-                ->orderBy('kelas')
-                ->pluck('kelas');
-        }
-
-        return view('profile.edit', compact('user', 'kelasOptions'));
+        $user = Auth::user();
+        return view('profile.index', compact('user'));
+    }
+    public function edit()
+    {
+        $user = Auth::user();
+        return view('profile.edit', compact('user'));
     }
 
     public function update(Request $request)

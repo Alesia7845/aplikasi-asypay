@@ -127,7 +127,7 @@
 
         <div class="main-wrapper">
             <div class="navbar">
-                <img src="{{ asset('images/logomadrasah.png') }}" alt="Asy Syafi'iyyah" class="logo">
+                <img src="{{ asset('images/logo.jpg') }}" alt="Asy Syafi'iyyah" class="logo">
                 <div class="user-info">
                     👤 {{ Auth::user()->name ?? 'Siswa' }}
                     <form action="{{ route('logout') }}" method="POST">

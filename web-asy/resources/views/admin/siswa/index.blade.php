@@ -9,18 +9,20 @@
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
         <a href="{{ route('admin.siswa.create') }}"
            class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded">
-           + Tambah Siswa
+            + Tambah Siswa
         </a>
 
+        {{-- Beri ID pada form agar mudah diakses di JavaScript --}}
         <form action="{{ route('admin.siswa.index') }}" method="GET"
-              class="flex flex-wrap items-center gap-2">
+              id="filterForm" class="flex flex-wrap items-center gap-2">
             {{-- Search umum: nama / NIS / email. Jika isi angka murni (1/2/12), dianggap kelas exact juga --}}
             <input type="text" name="search" value="{{ request('search') }}"
                    placeholder="Cari nama / NIS / email / angka=kelas"
                    class="border border-gray-300 rounded px-3 py-1 focus:outline-none focus:ring focus:ring-blue-300" />
 
             {{-- Filter Kelas (exact) --}}
-            <select name="kelas" class="border border-gray-300 rounded px-3 py-1">
+            {{-- Tambahkan ID dan event onchange --}}
+            <select name="kelas" id="kelasSelect" class="border border-gray-300 rounded px-3 py-1">
                 <option value="">Semua Kelas</option>
                 @isset($kelasList)
                 @foreach($kelasList as $k)
@@ -32,7 +34,8 @@
             </select>
 
             {{-- Filter Tahun Ajaran (exact) --}}
-            <select name="tahun_ajaran" class="border border-gray-300 rounded px-3 py-1">
+            {{-- Tambahkan ID dan event onchange --}}
+            <select name="tahun_ajaran" id="tahunAjaranSelect" class="border border-gray-300 rounded px-3 py-1">
                 <option value="">Semua Tahun</option>
                 @isset($tahunList)
                 @foreach($tahunList as $t)
@@ -43,6 +46,7 @@
                 @endisset
             </select>
 
+            {{-- Tombol Cari ini masih ada, tapi tidak perlu diklik jika menggunakan dropdown --}}
             <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-1 rounded">
                 Cari
             </button>
@@ -106,4 +110,32 @@
         {{ $siswas->links() }}
     </div>
 </div>
+
+{{-- Tambahkan script JavaScript di sini --}}
+@push('scripts')
+<script>
+    // Ambil elemen select dan form
+    const kelasSelect = document.getElementById('kelasSelect');
+    const tahunAjaranSelect = document.getElementById('tahunAjaranSelect');
+    const filterForm = document.getElementById('filterForm');
+
+    // Tambahkan event listener untuk Kelas
+    if (kelasSelect) {
+        kelasSelect.addEventListener('change', function() {
+            // Saat nilai Kelas berubah, kirim (submit) form
+            filterForm.submit();
+        });
+    }
+
+    // Tambahkan event listener untuk Tahun Ajaran
+    if (tahunAjaranSelect) {
+        tahunAjaranSelect.addEventListener('change', function() {
+            // Saat nilai Tahun Ajaran berubah, kirim (submit) form
+            filterForm.submit();
+        });
+    }
+</script>
+@endpush
+{{-- Pastikan layout Anda (layouts.admin) memiliki @stack('scripts') sebelum tag </body> --}}
+
 @endsection
