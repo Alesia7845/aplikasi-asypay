@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 const String baseUrl =
-    "https://rachael-nitrolic-inscriptively.ngrok-free.dev/api";
+    "https://zoogloeal-pycnidial-sunny.ngrok-free.dev/api";
 
 class TagihanService {
   Future<Map<String, dynamic>> getTagihanSummary(String nis) async {

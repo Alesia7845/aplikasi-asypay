@@ -2,8 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class TunggakanService {
-  final String baseUrl =
-      "https://rachael-nitrolic-inscriptively.ngrok-free.dev/api";
+  final String baseUrl = "https://zoogloeal-pycnidial-sunny.ngrok-free.dev/api";
 
   Future<List<dynamic>> getTunggakan(String nis) async {
     final url = Uri.parse("$baseUrl/tagihan/tunggakan/$nis");
