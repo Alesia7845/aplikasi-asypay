@@ -20,5 +20,7 @@ flutter:
   assets:
     - assets/logo_bawah.png
     - assets/poto1.png
+    - assets/poto2.png
+    - assets/poto3.png
 
   uses-material-design: true
