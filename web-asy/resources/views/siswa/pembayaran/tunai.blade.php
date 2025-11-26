@@ -12,7 +12,8 @@
         
         <form action="{{ route('admin.kasir.bayarForm', $tagihan->id) }}" method="GET" class="mt-4 mb-4">
             @csrf
-            <button type="submit" class="btn btn-primary w-100">Lanjutkan ke Kasir</button>
+            <x-button class="btn btn-primary w-100">Lanjutkan ke Kasir</x-button>
+
         </form>
 
         {{-- Form langsung konfirmasi bayar tunai --}}
