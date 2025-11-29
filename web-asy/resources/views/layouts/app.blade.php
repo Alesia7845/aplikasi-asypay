@@ -112,6 +112,72 @@
         }
     </style>
 </head>
+<!-- CHATBOT POPUP -->
+<div id="chatbox" class="chatbox-container">
+    <div class="chatbox-header">
+        <span>Chatbot</span>
+        <button id="closeChatbox" class="close-btn">✖</button>
+    </div>
+
+    <!-- Ganti ini dengan link chatbot Gemini kamu -->
+    <iframe src="https://your-gemini-chatbot-link.com"
+            class="chatbox-iframe"></iframe>
+</div>
+
+<style>
+    .chatbox-container {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 340px;
+        height: 450px;
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        overflow: hidden;
+        z-index: 9999;
+    }
+
+    .chatbox-header {
+        background: #4F46E5;
+        color: white;
+        padding: 10px;
+        font-size: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .close-btn {
+        background: transparent;
+        border: none;
+        color: white;
+        cursor: pointer;
+        font-size: 18px;
+    }
+
+    .chatbox-iframe {
+        width: 100%;
+        height: calc(100% - 40px);
+        border: none;
+    }
+</style>
+
+<script>
+    const openChat = document.getElementById('openChatbot');
+    const closeChat = document.getElementById('closeChatbox');
+    const chatbox = document.getElementById('chatbox');
+
+    openChat.onclick = () => {
+        chatbox.style.display = 'block';
+    };
+
+    closeChat.onclick = () => {
+        chatbox.style.display = 'none';
+    };
+</script>
+
 <body>
     <div class="wrapper">
         <aside class="sidebar">
@@ -122,6 +188,7 @@
                 <li><a href="{{ route('pembayaran.index') }}"><i class="fa fa-money-bill"></i> Pembayaran</a></li>
                 <li><a href="{{ route('profile.index') }}"><i class="fa fa-money-bill"></i> Profile Siswa</a></li>
                 <li><a href="{{ route('riwayat.index') }}"><i class="fa fa-money-bill"></i> Riwayat Pembayaran</a></li>
+                 <li><a href="{{ route('chatAI') }}"><i class="fa fa-money-bill"></i> chat</a></li>
             </ul>
         </aside>
 

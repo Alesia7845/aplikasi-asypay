@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\PembayaranController;
 use App\Http\Controllers\Admin\KasirController;
 use App\Http\Controllers\Admin\LaporanController;
 
+
 use App\Http\Controllers\Siswa\AuthController as SiswaAuthController;
 use App\Http\Controllers\Siswa\DashboardController as SiswaDashboardController;
 use App\Http\Controllers\Siswa\SiswaPembayaranController;
@@ -16,9 +17,11 @@ use App\Http\Controllers\Siswa\SiswaPembayaranController;
 use App\Http\Controllers\Siswa\SiswaRiwayatController;
 use App\Http\Controllers\Siswa\PaymentController;
 
+
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MidtransController;
 use App\Http\Controllers\ChartController;
+use App\Http\Controllers\ChatAIController;
 
 // === Profil umum (bukan admin/siswa) ===
 use App\Http\Controllers\ProfileController;
@@ -173,3 +176,6 @@ Route::get('/grafik-pembayaran', function () {
 // === ROUTE KANONIK WEBHOOK MIDTRANS (TANPA PREFIX) ===
 Route::post('/midtrans/notification', [SiswaPembayaranController::class, 'notificationHandler'])
     ->name('midtrans.notification');
+
+   Route::get('/chat', [ChatAIController::class, 'view']);
+Route::post('/chat', [ChatAIController::class, 'chat']);
