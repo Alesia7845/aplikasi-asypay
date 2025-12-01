@@ -7,7 +7,7 @@
     <style>
         /* Background dari folder public/images */
         body {
-            background: url('{{ asset('images/islam.jpg') }}') no-repeat center center fixed;
+            background: url('{{ asset('images/landing.jpg') }}') no-repeat center center fixed;
             background-size: cover;
             font-family: 'Poppins', sans-serif;
             color: #fff;
@@ -85,7 +85,7 @@
     <!-- Hero Section -->
     <div class="min-h-screen flex items-center justify-center px-6 pt-24">
         <div class="glass-box p-10 text-center max-w-2xl w-full">
-            <img src="{{ asset('images/logobaru.jpeg') }}" alt="Logo Pembayaran" class="w-24 mx-auto mb-6 opacity-90">
+            <img src="{{ asset('images/logo.jpg') }}" alt="Logo Pembayaran" class="w-24 mx-auto mb-6 opacity-90">
             <h1 class="text-4xl font-bold mb-4 leading-snug">
                 Selamat Datang di <span class="gradient-text">Sistem Pembayaran Madrasah</span>
             </h1>

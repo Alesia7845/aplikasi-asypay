@@ -177,5 +177,9 @@ Route::get('/grafik-pembayaran', function () {
 Route::post('/midtrans/notification', [SiswaPembayaranController::class, 'notificationHandler'])
     ->name('midtrans.notification');
 
-   Route::get('/chat', [ChatAIController::class, 'view']);
-Route::post('/chat', [ChatAIController::class, 'chat']);
+Route::get('/chat', [App\Http\Controllers\ChatAIController::class, 'view'])
+    ->name('chat');
+
+Route::post('/chat', [App\Http\Controllers\ChatAIController::class, 'chat'])
+    ->name('chat.send');
+

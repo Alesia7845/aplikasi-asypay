@@ -522,6 +522,13 @@
                             <span class="menu-text">Profil</span>
                         </a>
                     </li>
+                   <li>
+                        <a href="{{ route('chat') }}" data-title="Chat" class="{{ request()->routeIs('chat.*') ? 'active' : '' }}">
+                            <i class="fa fa-robot"></i>
+                            <span class="menu-text">Chat</span>
+                        </a>
+                    </li>
+
                 @endif
             </ul>
         </aside>

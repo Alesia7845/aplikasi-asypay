@@ -5,7 +5,7 @@ import 'dart:async';
 
 class AuthService {
   final String baseUrl =
-      " https://zoogloeal-pycnidial-sunny.ngrok-free.dev/api"; // <-- tambahkan /api di sini
+      "https://zoogloeal-pycnidial-sunny.ngrok-free.dev/api"; // <-- tambahkan /api di sini
 
   Future<Map<String, dynamic>> login(String nis, String password) async {
     try {
